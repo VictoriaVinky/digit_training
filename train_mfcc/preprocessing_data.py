@@ -66,7 +66,6 @@ def write_mfcc_f0_file(wave_files):
         overlap_ = temp_dict[1]
         wave, _ = librosa.load(utils.DATA_PATH + wave_file, mono=True, sr=16000)
         print("\n#####Write to MFCC files: " + wave_file + "\t" + str(len(wave)) + "\t" + str(overlap_) + "\t" + str(sample_over_))
-        f0 = np.loadtxt(utils.FO_PATH + wave_file[:wave_file.index(".")] + ".f0")
         with open(utils.MFCC_PATH + wave_file[:wave_file.index(".")] + ".txt", "wt") as f:
             for i in range(averNbFrame):
                 start = i * sample_over_
@@ -76,9 +75,8 @@ def write_mfcc_f0_file(wave_files):
                     wave_frame, sr=16000, n_mfcc=averNbFrame)
                 for j in range(len(mfcc)):
                     f.write(str(mfcc[j][0]))
-                    # if (j < len(mfcc) - 1):
-                    f.write("\t")
-                f.write(str(f0[i]))
+                    if (j < len(mfcc) - 1):
+                        f.write("\t")
                 if (i < averNbFrame - 1):
                     f.write("\n")
             print(str(i) + "\tstart=" + str(start) + "\tend=" + str(end))

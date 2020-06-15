@@ -9,7 +9,6 @@ import utils
 import pickle
 import numpy as np 
 
-from utils import MODEL_PATH, LIST_TEST, MFCC_PATH
 from utils import num_classes, epochs
 from utils import img_rows, img_cols, input_shape
 from utils import N_MELS, N_frames
@@ -20,7 +19,7 @@ from sklearn.preprocessing import StandardScaler
 # os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 
 def loading_testing_data():
-    mfcc_tests = [line.rstrip() for line in open(LIST_TEST)]
+    mfcc_tests = [line.rstrip() for line in open(utils.LIST_TEST)]
     # data_chart.display_single_data_chart(mfcc_tests)
 
     x_test = np.zeros(shape=(len(mfcc_tests), N_frames, N_MELS))
@@ -28,7 +27,7 @@ def loading_testing_data():
     X_scale = StandardScaler()
     idx = 0
     for mfcc_file in mfcc_tests:
-        mfcc_file_full_path = MFCC_PATH + mfcc_file
+        mfcc_file_full_path = utils.MFCC_PATH + mfcc_file
         print("##########TEST {}:\t{}".format(idx, mfcc_file_full_path))
         
         x_test_r = np.loadtxt(mfcc_file_full_path)
@@ -113,7 +112,7 @@ def eval_model(model, result_path, x, y):
 def recognize_one_file(model, mfcc_file):
     x_data = np.zeros(shape=(1,N_frames, N_MELS))
     X_scale = StandardScaler()
-    x_data_r = np.loadtxt(MFCC_PATH + mfcc_file)
+    x_data_r = np.loadtxt(utils.MFCC_PATH + mfcc_file)
     X_data = X_scale.fit_transform(x_data_r)
     x_data[0] = X_data
     x_data = x_data.reshape(x_data.shape[0], img_rows, img_cols, 1)
@@ -139,7 +138,7 @@ def recognize_one_file(model, mfcc_file):
     return (y_data, digit_predict)        
 
 def recognize_list_file(model, nb, loss, acc, file_result, file_CSV, dateNow, timeNow):
-    lst_file = [line.rstrip() for line in open(LIST_TEST)]
+    lst_file = [line.rstrip() for line in open(utils.LIST_TEST)]
     print("Tong so file test: ", len(lst_file))
 
     # Init digit count
@@ -199,16 +198,8 @@ if __name__ == '__main__':
 
     x_test, y_test = loading_testing_data()
 
-    ebegin = 209
-    # model_path = MODEL_PATH
-    # model_path = MODEL_PATH + "model_3/"
-    # model_path = MODEL_PATH + "model_4/"
-    # model_path = MODEL_PATH + "model_5/"
-    model_path = MODEL_PATH + "VGGNet_2_blocks/"
-    # model_path = MODEL_PATH + "VGGNet_3_blocks/"
-    # model_path = MODEL_PATH + "VGGNet_4_blocks/"
-
-    result_path = model_path.split("model/")[1]
+    ebegin = 202
+    model_path = utils.MODEL_PATH
 
     for i in range(ebegin, max_model + 1):
         file_json = model_path + "model_" + str(i) + ".json"
@@ -217,6 +208,6 @@ if __name__ == '__main__':
 
         model = load_model(file_json, file_h5)
 
-        loss, acc, file_result, file_CSV, dateNow, timeNow = eval_model(model, utils.RESULT_PATH + result_path, x_test, y_test)
+        loss, acc, file_result, file_CSV, dateNow, timeNow = eval_model(model, utils.RESULT_PATH, x_test, y_test)
 
         recognize_list_file(model, i, loss, acc, file_result, file_CSV, dateNow, timeNow)
