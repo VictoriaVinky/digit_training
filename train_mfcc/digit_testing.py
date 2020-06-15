@@ -198,7 +198,7 @@ if __name__ == '__main__':
 
     x_test, y_test = loading_testing_data()
 
-    ebegin = 202
+    ebegin = 1
     model_path = utils.MODEL_PATH
 
     for i in range(ebegin, max_model + 1):

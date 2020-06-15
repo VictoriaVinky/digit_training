@@ -16,29 +16,26 @@ batch_size = 4
 epochs = 250
 
 N_frames = 45
-N_MELS = 45
+N_MELS = 46
 
 img_rows, img_cols = N_frames, N_MELS
 input_shape = (img_rows, img_cols, 1)
 
-DATA_PATH = "./input/data_train/"
-MFCC_PATH = "./input/mfcc/"
-FO_PATH = "./input/f0/output/"
-MODEL_PATH = "./output/model/"
+DATA_PATH = "./data_train/"
+MFCC_PATH = "./train_mfcc_f0/mfcc_f0/"
+FO_PATH = "./train_mfcc_f0/f0/output/"
+MODEL_PATH = "./train_mfcc_f0/model/"
 
 # lst_train_mixed.txt: txt file contains list of file names for training
-LIST_TRAIN = "./input/file_list/lst_train_mixed.txt"
+LIST_TRAIN = "./file_list/lst_train_mixed.txt"
 # lst_valid_mixed.txt: txt file contains list of file names for validation
-LIST_VALID = "./input/file_list/lst_valid_mixed.txt"
+LIST_VALID = "./file_list/lst_valid_mixed.txt"
 # lst_test_mixed.txt: txt file contains list of file names for testing
-LIST_TEST = "./input/file_list/lst_test_mixed.txt"
+LIST_TEST = "./file_list/lst_test_mixed.txt"
 
-# RESULT_FILE_PATH = "./result/result.txt"
-# RESULT_CSV_PATH = "./result/result.csv"
-
-RESULT_PATH = "./output/result/"
-RESULT_FILE = "0_result.txt"
-CSV_FILE = "0_result.csv"
+RESULT_PATH = "./train_mfcc_f0/result/"
+RESULT_FILE = "1_result.txt"
+CSV_FILE = "1_result.csv"
 
 RATIO_TRAINING = 0.5
 RATIO_VALIDATION = 0.25

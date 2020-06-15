@@ -21,7 +21,6 @@ import time
 import resource
 
 import utils
-from utils import MODEL_PATH, LIST_TEST, MFCC_PATH
 from utils import freq_axis, time_axis, channel_axis
 from utils import num_classes, epochs, batch_size
 from utils import img_rows, img_cols
@@ -149,15 +148,10 @@ if __name__ == '__main__':
 
     print("\n\n2. Define model")
     global model, model_path
-    model, model_path = training_model.define_model_3_Conv2D(input_shape)
-    # model, model_path = training_model.define_model_4_Conv2D(input_shape)
-    # model, model_path = training_model.define_model_5_Conv2D(input_shape)
-    # model, model_path = training_model.create_MiniVGGNet_2_blocks(input_shape)
-    # model, model_path = training_model.create_MiniVGGNet_3_blocks(input_shape)
-    # model, model_path = training_model.create_MiniVGGNet_4_blocks(input_shape)
+    model, model_path = training_model.create_MiniVGGNet_2_blocks(input_shape)
     if not os.path.isdir(model_path):
         os.mkdir(model_path)
-    tf.keras.utils.plot_model(model, utils.RESULT_PATH + model_path.split("model/")[1] + '0_model.png', show_shapes=True)
+    tf.keras.utils.plot_model(model, utils.RESULT_PATH + '1_model.png', show_shapes=True)
 
     print("\n\n3. Training")
     history = training()

@@ -36,29 +36,6 @@ def recalculate_overlap(wave_files, averNbFrame):
         wave_files[wave_file] = temp_dict
         print(wave_file + "\t:" + str(sample_over_) + "\t:" + str(overlap_))
 
-def write_mfcc_file(wave_files):
-    for wave_file in wave_files.keys():
-        temp_dict = wave_files[wave_file]
-        sample_over_ = temp_dict[0]
-        overlap_ = temp_dict[1]
-        wave, _ = librosa.load(utils.DATA_PATH + wave_file, mono=True, sr=16000)
-        print("\n#####Write to MFCC files: " + wave_file + "\t" + str(len(wave)) + "\t" + str(overlap_) + "\t" + str(sample_over_))
-        with open(utils.MFCC_PATH + wave_file[:wave_file.index(".")] + ".txt", "wt") as f:
-            for i in range(averNbFrame):
-                start = i * sample_over_
-                end = min(start + sample_frame, len(wave))
-                wave_frame = wave[start:end]
-                mfcc = librosa.feature.mfcc(
-                    wave_frame, sr=16000, n_mfcc=averNbFrame)
-                for j in range(len(mfcc)):
-                    f.write(str(mfcc[j][0]))
-                    if (j < len(mfcc) - 1):
-                        f.write("\t")
-                if (i < averNbFrame - 1):
-                    f.write("\n")
-            print(str(i) + "\tstart=" + str(start) + "\tend=" + str(end))
-        # break
-
 def write_mfcc_f0_file(wave_files):
     for wave_file in wave_files.keys():
         temp_dict = wave_files[wave_file]
@@ -94,4 +71,4 @@ if __name__ == '__main__':
 
     recalculate_overlap(wave_files, averNbFrame)
     
-    write_mfcc_file(wave_files)
+    write_mfcc_f0_file(wave_files)
